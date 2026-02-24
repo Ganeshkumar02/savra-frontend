@@ -1,54 +1,59 @@
 const AIPulse = ({ summary }) => {
-  let insight = ""
+  const { lessons, quizzes, active_teachers, assessments } = summary
 
-  if (summary.lessons > summary.quizzes) {
-    insight = "Lesson creation is higher than quiz activity this week."
+  let insight = ""
+  let toneClass = "bg-purple-50 text-purple-700"
+
+  if (lessons > quizzes) {
+    insight = "Lesson creation is currently leading. Consider encouraging more quiz-based assessments to balance engagement."
+  } else if (quizzes > lessons) {
+    insight = "Quiz engagement is stronger this week. Students appear actively participating in evaluations."
+    toneClass = "bg-green-50 text-green-700"
   } else {
-    insight = "Quiz engagement is stronger this week."
+    insight = "Lesson and quiz activity are evenly balanced this week."
+    toneClass = "bg-blue-50 text-blue-700"
   }
 
   return (
-    <div className="w-full bg-white rounded-2xl shadow-sm 
-                    p-4 sm:p-6 lg:p-8 
-                    transition-all duration-300 
-                    hover:shadow-md">
+    <div className="w-full">
 
       {/* Header */}
-      <h2 className="text-base sm:text-lg lg:text-xl 
-                     font-semibold text-gray-700 
-                     mb-4 sm:mb-6">
-        AI Pulse Summary
-      </h2>
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-800">
+          AI Pulse Summary
+        </h2>
+        <p className="text-sm text-gray-400">
+          Automated weekly insights
+        </p>
+      </div>
 
-      {/* Content */}
-      <div className="flex flex-col gap-4">
+      <div className="space-y-5">
 
         {/* Insight Card */}
-        <div className="bg-purple-50 
-                        p-4 sm:p-5 
-                        rounded-xl 
-                        text-sm sm:text-base 
-                        text-gray-700 
-                        leading-relaxed">
+        <div className={`p-5 rounded-2xl text-sm leading-relaxed ${toneClass}`}>
           {insight}
         </div>
 
-        {/* Active Teachers Card */}
-        <div className="bg-green-50 
-                        p-4 sm:p-5 
-                        rounded-xl 
-                        text-sm sm:text-base 
-                        text-gray-700 
-                        flex flex-col sm:flex-row 
-                        sm:items-center 
-                        sm:justify-between 
-                        gap-2">
+        {/* Metrics Cards */}
+        <div className="space-y-4">
 
-          <span>Total active teachers</span>
+          <div className="bg-gray-50 p-4 rounded-xl flex justify-between items-center">
+            <span className="text-sm text-gray-500">
+              Total Active Teachers
+            </span>
+            <span className="text-lg font-semibold text-gray-900">
+              {active_teachers}
+            </span>
+          </div>
 
-          <span className="text-lg sm:text-xl font-semibold text-gray-900">
-            {summary.active_teachers}
-          </span>
+          <div className="bg-gray-50 p-4 rounded-xl flex justify-between items-center">
+            <span className="text-sm text-gray-500">
+              Total Assessments
+            </span>
+            <span className="text-lg font-semibold text-gray-900">
+              {assessments}
+            </span>
+          </div>
 
         </div>
 
